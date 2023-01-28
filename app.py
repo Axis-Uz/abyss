@@ -1,15 +1,6 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for, abort
 from werkzeug.utils import secure_filename
-import os
-import cv2
-import io
-import numpy as np
-import imghdr
 from utility import *
-# TODO Learn about python environment
-# TODO Add app variable for model paths
-# TODO Create function for each detection technique
-# TODO Create routes to these functions
 
 
 app = Flask(__name__)
@@ -21,17 +12,21 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/', methods=["POST"])
+@app.route("/", methods=["POST"])
 def upload_file():
-    uploaded_file = request.files['img-file']
+    uploaded_file = request.files["img-file"]
     filename = secure_filename(uploaded_file.filename)
     store_as_byte(uploaded_file, app.config["BYTE_DIR"], filename)
-    return redirect(url_for("df_img", filename=filename))
+    _, ext = os.path.splitext(filename)
+    if ext in app.config["IMG_EXT"]:
+        return redirect(url_for("df_img", filename=filename))
+    elif ext in app.config["VID_EXT"]:
+        return redirect(url_for("df_vid", filename=filename))
+    return redirect(url_for("index"))
 
 
 @app.route("/df_img/<string:filename>")
 def df_img(filename: str):
-    results = {}
     if filename:
         meso = Meso4()
         meso.load(app.config["MESO"]["DF"])
@@ -40,13 +35,20 @@ def df_img(filename: str):
             filename=filename,
             yolo_model=app.config["YOLO_MODEL"],
             caffe_model=app.config["CAFFE_MODEL"],
-            model=meso)
+            model=meso,
+        )
     return [fake]
 
 
 @app.route("/df_vid/<string:filename>")
 def df_vid(filename: str):
-    pass
+    if filename:
+        video_file = video_from_byte(loc_dir=app.config["BYTE_DIR"], filename=filename)
+        fake = detectFakeVideo(
+            video=video_file, model_path=app.config["VIDEO_DETECT"]["87A_20F"]
+        )
+
+    return [fake]
 
 
 if __name__ == "__main__":

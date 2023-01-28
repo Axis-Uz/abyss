@@ -1,5 +1,8 @@
+.vscode
+*.cfg
 __pycache__
 .idea
 config.py
 /static/bytes/*
 /stored/*/*
+/virtual_env/*
