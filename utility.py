@@ -97,14 +97,16 @@ def CaffeExtract(img_file: np.ndarray, caffe_model: dict):
         height, width = img_file.shape[:2]
         frames = []
         shapes = []
-        caffe = cv2.dnn.readNetFromCaffe(caffe_model["PROTO"], caffe_model["WEIGHTS"])
+        caffe = cv2.dnn.readNetFromCaffe(
+            caffe_model["PROTO"], caffe_model["WEIGHTS"])
         blob = cv2.dnn.blobFromImage(
             image=img_file, scalefactor=1.0, size=(300, 300), mean=(104.0, 177.0, 123.0)
         )
         caffe.setInput(blob)
         modelOutput = caffe.forward()
         for i in range(0, modelOutput.shape[2]):
-            box = modelOutput[0, 0, i, 3:7] * np.array([width, height, width, height])
+            box = modelOutput[0, 0, i, 3:7] * \
+                np.array([width, height, width, height])
             startX, startY, endX, endY = box.astype("int")
             confidence = modelOutput[0, 0, i, 2]
             if confidence > 0.5:
@@ -131,7 +133,8 @@ def PersonDetector(img_file: np.ndarray, yolo_model: dict):
     classes = []
     with open(yolo_model["COCO"], "r") as f:
         classes = f.read().splitlines()
-    yolo = cv2.dnn.readNet(yolo_model["YOLO3_WEIGHTS"], yolo_model["YOLO3_CONFIG"])
+    yolo = cv2.dnn.readNet(
+        yolo_model["YOLO3_WEIGHTS"], yolo_model["YOLO3_CONFIG"])
     yolo.setPreferableBackend(cv2.dnn.DNN_BACKEND_DEFAULT)
     yolo.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
     blob = cv2.dnn.blobFromImage(
@@ -276,7 +279,8 @@ IMG_NORMALIZER = transforms.Normalize(
 VID_TRANSFORMER = transforms.Compose(
     [
         transforms.ToPILImage(),
-        transforms.Resize((VD_CONSTANTS["IMG_SIZE"], VD_CONSTANTS["IMG_SIZE"])),
+        transforms.Resize(
+            (VD_CONSTANTS["IMG_SIZE"], VD_CONSTANTS["IMG_SIZE"])),
         transforms.ToTensor(),
         transforms.Normalize(VD_CONSTANTS["MEAN"], VD_CONSTANTS["STD"]),
     ]
@@ -304,10 +308,12 @@ class Model(torch.nn.Module):
         bidirectional=False,
     ):
         super(Model, self).__init__()
-        model = models.resnext50_32x4d(weights=models.ResNeXt50_32X4D_Weights.DEFAULT)
+        model = models.resnext50_32x4d(
+            weights=models.ResNeXt50_32X4D_Weights.DEFAULT)
 
         self.model = torch.nn.Sequential(*list(model.children())[:-2])
-        self.lstm = torch.nn.LSTM(latent_dim, hidden_dim, lstm_layers, bidirectional)
+        self.lstm = torch.nn.LSTM(
+            latent_dim, hidden_dim, lstm_layers, bidirectional)
         self.relu = torch.nn.LeakyReLU()
         self.dp = torch.nn.Dropout(0.4)
         self.linear1 = torch.nn.Linear(2048, num_classes)
@@ -364,7 +370,8 @@ def makePredictions(model: Model, frames):
 
 def loadModel(model_path: str):
     model = Model(2).to(device=VD_CONSTANTS["DEVICE"])
-    model.load_state_dict(torch.load(f=model_path, map_location=VD_CONSTANTS["DEVICE"]))
+    model.load_state_dict(torch.load(
+        f=model_path, map_location=VD_CONSTANTS["DEVICE"]))
     return model
 
 

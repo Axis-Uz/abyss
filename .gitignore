@@ -7,3 +7,4 @@ config.py
 /stored/*/*
 /virtual_env/*
 node_modules/
+/templates/test.html

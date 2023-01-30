@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drag & Drop File Upload</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../static/css/dist/output.css">
+    <style>
+        #image-display figure {
+            width: 100%;
+        }
+
+        #image-display img {
+            width: 100%;
+        }
+
+        #image-display video {
+            width: 100%;
+        }
+
+        #image-display figcaption {
+            font-size: 0.8em;
+            text-align: center;
+            color: #5a5861;
+        }
+
+        .active {
+            border: 0.2em dashed #025bee;
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    <div class="bg-gray-200 w-[50%] sm:w-[30%] py-12 px-7 absolute translate-x-[-50%] left-1/2 top-4 shadow-xl rounded-lg flex flex-col items-center"
+        id="container">
+        <input class="hidden" type="file" id="upload-button" accept="image/*,video/*" />
+        <label
+            class="w-full min-w-[50px] bg-zinc-700 text-gray-100 text-center lg:text-base text-sm mt-0 mb-1 mx-auto py-4 px-2 rounded-md cursor-pointer"
+            for="upload-button">
+            <i class="fa-solid fa-upload"></i>
+            &nbsp; Choose Or Drop Photos
+        </label>
+        <div id="error" class="text-center text-red-500"></div>
+        <div id="image-display" class="w-fit my-0 mx-auto flex justify-center flex-col items-center"></div>
+    </div>
+    <!-- Script -->
+    <script src="../static/scripts/drag.js"></script>
+</body>
+
+</html>

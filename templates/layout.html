@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <title>Void</title>
-  </head>
-  <body>
-    <h1>
-      {%if outcome["fake"] == True %} Deepfake {%elif outcome["real"] == True %}
-      Real {%else%} ERROR {%endif%}
-    </h1>
-    <img src="{{img_src}}" alt="">
-  </body>
+</head>
+
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in outcome.items() %}
+            <tr>
+                <td> {{ key }} </td>
+                <td> {{ value }} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{url_for('index')}}">Return</a>
+</body>
+
 </html>
