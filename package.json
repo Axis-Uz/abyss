@@ -1,0 +1,10 @@
+{
+  "name": "void",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Axis-Uz/void.git"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
+  }
+}

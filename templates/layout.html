@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Void</title>
-</head>
-<body>
-{% block body%} {%endblock%}
-</body>
+  </head>
+  <body>
+    <h1>
+      {%if outcome["fake"] == True %} Deepfake {%elif outcome["real"] == True %}
+      Real {%else%} ERROR {%endif%}
+    </h1>
+    <img src="{{img_src}}" alt="">
+  </body>
 </html>

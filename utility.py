@@ -186,8 +186,7 @@ class Meso4(Classifier):
         )
 
     def init_model(self):
-        x = Input(
-            shape=(256,256,3))
+        x = Input(shape=(256, 256, 3))
 
         x1 = Conv2D(8, (3, 3), padding="same", activation="relu")(x)
         x1 = BatchNormalization()(x1)

@@ -1,7 +1,7 @@
-from flask import Flask, render_template, jsonify, request, redirect, url_for, abort
+from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
-from utility import *
 
+from utility import *
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py")
@@ -16,7 +16,11 @@ def index():
 def upload_file():
     uploaded_file = request.files["img-file"]
     filename = secure_filename(uploaded_file.filename)
+    if filename == "":
+        # TODO When No File is Uploaded
+        return redirect(url_for("index"))
     store_as_byte(uploaded_file, app.config["BYTE_DIR"], filename)
+    uploaded_file.save("./static/bytes/" + filename)
     _, ext = os.path.splitext(filename)
     if ext in app.config["IMG_EXT"]:
         return redirect(url_for("df_img", filename=filename))
@@ -37,7 +41,8 @@ def df_img(filename: str):
             caffe_model=app.config["CAFFE_MODEL"],
             model=meso,
         )
-    return [fake]
+    return render_template(
+        "layout.html", outcome=fake["Total Outcome"], img_src="static/bytes/" + filename)
 
 
 @app.route("/df_vid/<string:filename>")
