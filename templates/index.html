@@ -3,124 +3,375 @@
 
 <head>
     <title>Testing</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link rel="stylesheet" href="{{url_for('static',filename='css/dist/output.css')}}" />
-    <!-- <link rel="stylesheet" href="../static/css/dist/output.css" /> -->
-
-
-
-    <style>
-        #image-display figure {
-            width: 45%;
-        }
-
-        #image-display img {
-            width: 100%;
-        }
-
-        #image-display video {
-            width: 100%;
-        }
-
-        #image-display figcaption {
-            font-size: 0.8em;
-            text-align: center;
-            color: #5a5861;
-        }
-
-        .active {
-            border: 0.2em dashed #025bee;
-        }
-    </style>
-    <script>
-        function someFun() {
-
-        }
-    </script>
+    <link rel="stylesheet" href="../static/css/dist/output.css" />
 </head>
 
 <body>
-    <header class="w-full shadow-sm">
-        <nav class=" flex flex-wrap items-center justify-between w-full py-4 md:py-0 px-4 text-lg bg-zinc-800">
-            <div>
-                <a href="#" class="flex flex-shrink-0 items-center justify-center">
-                    <img src="{{url_for('static',filename='svg/logo.svg')}}"
-                        class="w-8 h-8 p-1 bg-gradient-to-br from-violet-800 to-blue-300 rounded-full" alt="">
-                    <span
-                        class=" ml-3 text-lg text-transparent uppercase font-semibold bg-clip-text bg-gradient-to-r from-violet-600 to-blue-300 antialiased">ABYSS</span>
-                </a>
-            </div>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" id="menu-button"
-                class="h-6 w-6 cursor-pointer md:hidden block">
-                <path fill-rule="evenodd"
-                    d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
-                    clip-rule="evenodd" />
-            </svg>
-            <div class="hidden w-full md:flex md:items-center md:w-auto" id="menu">
-                <ul class="text-violet-500 pt-4 text-base md:flex md:justify-between md:pt-0 ">
-                    <li>
-                        <a class="hvr-grow md:p-4 py-2 block hover:text-violet-400 font-medium" href="#">About</a>
-                    </li>
 
-                    <li>
-                        <a class="hvr-grow md:p-4 py-2 block hover:text-violet-400 font-medium" href="#">Learn</a>
-                    </li>
-                </ul>
-            </div>
+
+    <header>
+        <nav class="flex items-center justify-evenly  py-5 px-4 text-lg  ">
+            <a href="{{url_for('index')}}" class="flex flex-shrink-0 items-center justify-center">
+                <img src="{{url_for('static',filename='assets/logo.svg')}}"
+                    class="w-8 h-8 p-1 bg-gradient-to-br from-violet-800 to-blue-300 rounded-full" alt="logo">
+                <span
+                    class=" ml-3 text-4xl text-transparent uppercase font-semibold bg-clip-text bg-gradient-to-r from-violet-600 to-blue-300 antialiased">ABYSS</span>
+            </a>
+            <a href="https://github.com/Axis-Uz/void"
+                class=" inline-flex items-center   border-0 py-1 px-3 focus:outline-none hover:bg-zinc-200 rounded text-base mt-4 md:mt-0 bg-zinc-100 justify-between p-2 hvr-grow">
+                <span class="text-zinc-900 uppercase text-xl font-semibold">
+                    Github
+                </span>
+                <img src="{{url_for('static',filename='assets/github-mark.svg')}}" class="w-8 h-8 p-1"
+                    alt="github logo" />
+            </a>
         </nav>
     </header>
-    <section>
-        <div class="container mx-auto flex justify-center px-5 py-20 md:flex-row flex-col items-center">
-            <form id="container" action="{{url_for('upload_file')}}" enctype="multipart/form-data" method="post"
-                class="flex flex-col items-center bg-zinc-800 w-[30%] sm:w-[50%] min-w-[25em] mx-0 py-10 px-5 shadow-lg shadow-black rounded-lg ">
-                <input class="hidden" type="file" name="media" id="upload-button" accept="image/*,video/*" />
-                <label class=" w-[60%] text-center mt-0 mb-1 mx-auto py-4 px-2 rounded-md cursor-pointer 
-                        block relative bg-zinc-700 hvr-grow text-gray-400" for="upload-button">
-                    <!-- <i class="fa-solid fa-upload"></i> -->
-                    <span class="flex justify-center items-center flex-col sm:flex-row">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-5 w-5 " fill="none"
-                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+
+    <section class="text-gray-600 body-font">
+        <div class="mx-auto flex h-[600px] px-5 py-10 my-auto md:flex-row flex-col justify-center items-center">
+            <div
+                class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-20 md:mb-0 md:ml-10  items-center text-center">
+                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-zinc-200">Are you sure what are you
+                    seeing
+                    <br class="hidden lg:inline-block capitalize">real ?
+                </h1>
+                <div class="flex justify-center mt-2">
+                    <span
+                        class="inline-flex justify-between items-center text-white bg-violet-700 border-0 py-2 px-10 focus:outline-none  rounded text-lg">
+                        Check Now
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="w-8 h-8 p-1 ml-1">
+                            <path fill-rule="evenodd"
+                                d="M16.72 7.72a.75.75 0 011.06 0l3.75 3.75a.75.75 0 010 1.06l-3.75 3.75a.75.75 0 11-1.06-1.06l2.47-2.47H3a.75.75 0 010-1.5h16.19l-2.47-2.47a.75.75 0 010-1.06z"
+                                clip-rule="evenodd" />
                         </svg>
-                        <span class="sm:text-base text-sm ">&nbsp;Browse or Drop</span>
                     </span>
-                </label>
-                <div id="error" class="text-center text-red-500"></div>
-                <div id="image-display"
-                    class=" relative w-[90%]  my-2 mx-auto flex justify-evenly items-center flex-col">
+
+
                 </div>
+            </div>
+            <div class="h-full lg:max-w-lg lg:w-full md:w-1/2 w-5/6 flex justify-center">
+                <form id="container" action="{{url_for('upload_file')}}" enctype="multipart/form-data" method="post"
+                    class="flex flex-col items-center w-full bg-zinc-800 h-full rounded-lg">
+                    <input class="hidden" type="file" name="media" id="upload-button" accept="image/*,video/*" />
+                    <label
+                        class=" w-1/2 text-center my-3 mx-auto p-3 rounded-md cursor-pointer bg-zinc-700 hover:bg-zinc-600 text-gray-200 text-2xl"
+                        for="upload-button">
+                        <img src="{{url_for('static',filename='assets/upload.svg')}}" class="inline-block h-5 w-5"
+                            alt="upload.svg">
+                        <span class="text-lg">&nbsp;Upload a Image / Video</span>
+                        </span>
+                    </label>
+                    <div id="error" class="text-center text-red-500"></div>
+                    <div id="image-display" class="flex flex-col justify-evenly items-center">
+                    </div>
 
-            </form>
+                </form>
+            </div>
         </div>
-
     </section>
 
+
+    <section class="body-font overflow-hidden">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="my-8 divide-y-2 divide-violet-400">
+                <div class="py-8 flex flex-wrap md:flex-nowrap">
+                    <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
+                        <span class="font-semibold title-font text-zinc-600">WHAT</span>
+                    </div>
+                    <div class="md:flex-grow">
+                        <h2
+                            class="text-2xl font-medium title-font mb-2 text-transparent bg-clip-text bg-gradient-to-b from-violet-400 to-blue-400">
+                            What are Deepfakes ?</h2>
+                        <p class="leading-relaxed text-zinc-300">Deepfake is a term used to describe a type of
+                            artificial
+                            intelligence-based technology that is used to generate synthetic media, such as images,
+                            videos, and audio. This technology uses machine learning algorithms to manipulate and
+                            generate new content that is designed to look and sound like real people or events.</p>
+                    </div>
+                </div>
+                <div class="py-8 flex flex-wrap md:flex-nowrap">
+                    <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
+                        <span class="font-semibold title-font text-zinc-600">WHEN</span>
+                    </div>
+                    <div class="md:flex-grow">
+                        <h2
+                            class="text-2xl font-medium title-font mb-2 text-transparent bg-clip-text bg-gradient-to-b from-violet-500 to-blue-400">
+                            First Appearance</h2>
+                        <p class="leading-relaxed text-zinc-300">Deepfake technology first appeared in
+                            November 2017 when an anonymous user on the social media platform Reddit posted an algorithm
+                            that leveraged existing artificial intelligence algorithms to create realistic fake
+                            videos</p>
+                    </div>
+                </div>
+                <div class="py-8 flex flex-wrap md:flex-nowrap">
+                    <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
+                        <span class="font-semibold title-font text-zinc-600">HOW</span>
+                    </div>
+                    <div class="md:flex-grow">
+                        <h2
+                            class="text-2xl font-medium title-font mb-2 text-transparent bg-clip-text bg-gradient-to-b from-violet-500 to-blue-400">
+                            How are they created ?</h2>
+                        <p class="leading-relaxed text-zinc-300">
+                            Deepfakes are created using a machine learning technique called
+                            <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network"
+                                class="text-violet-400 hover:text-violet-300">
+                                generative adversarial networks (GANs)
+                            </a>.
+                            A GAN consists of two neural networks: a
+                            <em>generator</em> and a <em>discriminator</em>.
+                            The
+                            generator creates synthetic images, videos or
+                            audio, while the discriminator tries to distinguish the synthetic content from real content.
+                            During the training process, the generator and discriminator compete with each other and
+                            gradually improve, until the generator produces content that is virtually indistinguishable
+                            from the real thing.
+                            To create a deepfake, a large dataset of real images, videos or audio
+                            of a target person is used to train the generator to mimic their appearance, voice, or
+                            mannerisms. The output of the generator is then combined with a source video or image to
+                            replace the face, voice or body movements of the original person in the source.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="text-zinc-300 body-font">
+        <div class="container px-5 py-24 mx-auto flex flex-wrap">
+            <div class="flex flex-wrap -mx-4 mt-auto mb-auto lg:w-1/2 sm:w-2/3 content-start sm:pr-10">
+                <div class="w-full sm:p-4 px-4 mb-6">
+                    <h1
+                        class="title-font font-medium text-3xl mb-2 text-transparent bg-clip-text bg-gradient-to-b from-violet-500 to-blue-400">
+                        How much deepfake has effected us ?</h1>
+                    <p class="leading-relaxed">
+                        The statistics is from the survey connect by
+                        <a href="https://regmedia.co.uk/2019/10/08/deepfake_report.pdf"
+                            class="text-violet-400 hover:text-violet-300">Deeptrace</a> in 2019.
+                    </p>
+                </div>
+                <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+                    <h2
+                        class="title-font font-medium text-3xl text-transparent bg-clip-text bg-gradient-to-b from-violet-500 to-blue-400">
+                        14,678</h2>
+                    <p class="leading-relaxed">Total number of deepfake videos online</p>
+                </div>
+                <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+                    <h2
+                        class="title-font font-medium text-3xl text-transparent bg-clip-text bg-gradient-to-b from-violet-500 to-blue-400">
+                        96%</h2>
+                    <p class="leading-relaxed">Deepfake are pornographic</p>
+                </div>
+            </div>
+            <div class="lg:w-1/2 sm:w-1/3 w-full rounded-lg mt-6 sm:mt-0">
+                <img class="w-full h-full object-cover object-center"
+                    src="{{url_for('static',filename='assets/gender in deepfake.png')}}" alt="stats">
+                <p class="text-zinc-500">Percentage of female and male that deepfaked.</p>
+            </div>
+            <p class="text-zinc-500 leading-relaxed">
+            </p>
+        </div>
+    </section>
+
+    <section class="text-white body-font">
+        <div class="container px-5 py-24 mx-auto flex flex-wrap">
+            <div class="flex flex-wrap w-full">
+                <div class="lg:w-2/5 md:w-1/2 md:pr-10 md:py-6">
+                    <h1
+                        class="title-font font-medium text-3xl mb-5 text-transparent bg-clip-text bg-gradient-to-b from-violet-500 to-blue-400">
+                        What this website does ?</h1>
+                    <div class="flex relative pb-12">
+                        <div class="h-full w-10 absolute inset-0 flex items-center justify-center">
+                            <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
+                        </div>
+                        <div
+                            class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                            </svg>
+
+                        </div>
+                        <div class="flex-grow pl-4">
+                            <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">STEP 1</h2>
+                            <p class="leading-relaxed">You need to upload the image or video that you want to find are
+                                deepfake or real.</p>
+                        </div>
+                    </div>
+                    <div class="flex relative pb-12">
+                        <div class="h-full w-10 absolute inset-0 flex items-center justify-center">
+                            <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
+                        </div>
+                        <div
+                            class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" />
+                            </svg>
+
+                        </div>
+                        <div class="flex-grow pl-4">
+                            <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">STEP 2</h2>
+                            <p class="leading-relaxed">Both images and videos are processed accordingly.</p>
+                        </div>
+                    </div>
+                    <div class="flex relative pb-12">
+                        <div class="h-full w-10 absolute inset-0 flex items-center justify-center">
+                            <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
+                        </div>
+                        <div
+                            class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                            </svg>
+
+                        </div>
+                        <div class="flex-grow pl-4">
+                            <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">STEP 3</h2>
+                            <p class="leading-relaxed">The processed media send into the trained model for analysis.</p>
+                        </div>
+                    </div>
+                    <div class="flex relative pb-12">
+                        <div class="h-full w-10 absolute inset-0 flex items-center justify-center">
+                            <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
+                        </div>
+                        <div
+                            class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" />
+                            </svg>
+
+                        </div>
+                        <div class="flex-grow pl-4">
+                            <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">STEP 4</h2>
+                            <p class="leading-relaxed">You will redirected to the result page where the result from the
+                                analysis done by the model is shown.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex relative">
+                        <div
+                            class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                                <path d="M22 4L12 14.01l-3-3"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-grow pl-4">
+                            <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">FINISH</h2>
+                            <p class="leading-relaxed">You can find whether your media is deepfake or not.
+                            </p>
+                            <p class="leading-relaced text-zinc-500">In some case model might give you wrong output.
+                                Therefore, always keep your eyes open.</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/3 sm:w-1/3 w-full rounded-lg mt-6 sm:mt-0">
+                    <img src="{{url_for('static',filename='assets/gan image.jpeg')}}" alt="GAN image">
+                    <figcaption class="text-zinc-500">GAN image of a non-existent human from
+                        <a href="https://www.whichfaceisreal.com/index.php"
+                            class="text-violet-500 hover:text-violet-400">whichfaceisreal</a>.
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class=" text-bas relative text-gray-400">
+        <div class="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
+            <div
+                class="lg:w-2/3 md:w-1/2 bg-zinc-800 rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.9126518491075!2d72.84791861483585!3d19.02357028711798!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7cfa677a5dfbd%3A0x4944bade82b074e3!2sRamnarain%20Ruia%20Autonomous%20College%20of%20Science%20and%20Arts!5e0!3m2!1sen!2sin!4v1670328662982!5m2!1sen!2sin"
+                    width="100%" height="100%" marginHeight="0" marginWidth="0" class="absolute inset-0"
+                    allowfullscreen="" scrolling="no"></iframe>
+                <div class="w-full md:w-1/2 bg-zinc-900 relative py-6 flex flex-wrap rounded shadow-md hvr-grow">
+                    <div class="lg:w-1/2 px-6">
+                        <h2 class="text-white font-semibold tracking-widest text-xs flex justify-start items-center">
+                            ADDRESS
+                            <img src="{{url_for('static',filename='assets/map.svg')}}" class="w-5 h-5" alt="map.svg">
+                        </h2>
+                        <p class="mt-1">
+                            S.P. Mandali Ramnarain Ruia Autonomous College Matunga
+                        </p>
+                    </div>
+                    <div class="lg:w-1/2  px-6 mt-4 lg:mt-0">
+                        <div>
+                            <h2
+                                class="text-white font-semibold tracking-widest text-xs flex justify-start items-center">
+                                EMAIL
+                                <img src="{{url_for('static',filename='assets/at-rate.svg')}}" class="w-5 h-5"
+                                    alt="at-rate.svg">
+
+                            </h2>
+                            <a class="text-purple-500 leading-relaxed ">
+                                axis4uzair@gmail.com
+                            </a>
+                        </div>
+                        <div>
+                            <h2
+                                class="text-white font-semibold tracking-widest text-xs mt-4 flex justify-start items-center">
+                                PHONE
+                                <img src="{{url_for('static',filename='asset/phone.svg')}}" class="w-5 h-5"
+                                    alt="phone.svg">
+                            </h2>
+                            <p class="leading-relaxed">9167708144</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:w-1/3 md:w-1/2 flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
+                <h2 class="text-xl mb-1 font-medium text-white ">Feedback</h2>
+                <p class="leading-relaxed mb-5 text-gray-400 ">
+                    Find some problem or Just want to communicate.
+                </p>
+                <form action="mailto:axis4uzair@gmail.com" method="post" encType="text/plain">
+                    <div class="relative mb-4">
+                        <label for="name" class="leading-7 text-md text-white">
+                            Name
+                        </label>
+                        <input type="text" id="name" name="name"
+                            class="
+              w-full bg-transparent border-b-2 focus:outline-none focus:border-b-purple-500 py-1 leading-8 transition-colors duration-500 ease-in-out" />
+                    </div>
+                    <div class="relative mb-4">
+                        <label for="email" class="leading-7 text-md text-white">
+                            Email
+                        </label>
+                        <input type="email" id="email" name="email"
+                            class="
+                w-full bg-transparent border-b-2 focus:outline-none focus:border-b-purple-500 py-1 leading-8 transition-colors duration-500 ease-in-out" />
+                    </div>
+                    <div class="relative mb-4">
+                        <label for="message" class="leading-7 text-md text-white">
+                            Message
+                        </label>
+                        <textarea id="message" name="message"
+                            class="
+                w-full bg-transparent border-b-2 focus:outline-none focus:border-b-purple-500 py-1 leading-8 transition-colors duration-500 ease-in-out"></textarea>
+                    </div>
+                    <input type="submit" value="Send"
+                        class="w-full hvr-grow text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded text-lg" />
+                </form>
+            </div>
+        </div>
+    </footer>
+
     <!-- Script -->
-    <!-- <script src="../static/scripts/drag.js"></script> -->
-    <!-- <script src="../static/scripts/index.js"></script> -->
-
     <script src="{{url_for('static',filename='scripts/index.js')}}"></script>
-    <script src="{{url_for('static',filename='scripts/drag.js')}}"></script>
-    <script>
-        // document.forms['container'].addEventListener('submit', (event) => {
-        //     event.preventDefault(),
-        //         fetch(event.target.action, {
-        //             method: "POST",
-        //             body: new URLSearchParams(new FormData(event.target))
-        //         }).then((response) => {
-        //             if (!response.ok) {
-        //                 throw new Error(`HTTP ERROR: ${response.status}`)
-        //             }
-        //             return response.json()
-        //         }).then((body) => {
-
-        //         }).catch((error) => {
-
-        //         })
-        // })
-    </script>
-
 
 </body>
 

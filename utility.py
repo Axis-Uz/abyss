@@ -158,9 +158,9 @@ def PersonDetector(img_file: np.ndarray, yolo_model: dict):
                 class_ids.append(class_id)
         classes_dict = {classes[i] for i in class_ids}
         if "person" in classes_dict:
-            return True, list(classes_dict)
+            return True
         else:
-            return False, list(classes_dict)
+            return False
 
 
 class Classifier:
@@ -217,26 +217,26 @@ class Meso4(Classifier):
         return keras.models.Model(inputs=x, outputs=y)
 
 
-def detectFakeImg(
-    loc_dir: str, filename: str, yolo_model: dict, caffe_model: dict, model: Meso4
-):
+def detectFakeImg(loc_dir: str, filename: str, yolo_model: dict, caffe_model: dict, model: Meso4):
+    model_results = {
+        "person detected": 'False',
+        "number of faces": 0,
+        "total real": 0,
+        "total df": 0,
+        "outcome": "none"
+    }
     img = img_from_byte(loc_dir, filename)
-    model_results = {}
-    (
-        model_results["Person Detected"],
-        model_results["Detected Objects"],
-    ) = PersonDetector(img, yolo_model)
-    if not model_results["Person Detected"]:
+    model_results["person detected"] = str(PersonDetector(img_file=img,
+                                                          yolo_model=yolo_model))
+    if model_results["person detected"] == "False":
+        # If there is no person detected then return
         return model_results
     frames = CaffeExtract(img, caffe_model)
-    model_results["Number of Frames"] = len(frames)
+    model_results["number of faces"] = len(frames)
     if frames == None or len(frames) == 0:
         return model_results
     else:
-        model_results["Predictions"] = []
-        outcomes = {"real": 0, "fake": 0}
-        for index, frame in enumerate(frames):
-            model_results["Predictions"].append({})
+        for i, frame in enumerate(frames):
             frameArr = np.asanyarray(frame)
             reshapedFrame = np.array(
                 Image.fromarray(np.uint8(frameArr)).resize((256, 256))
@@ -244,20 +244,10 @@ def detectFakeImg(
             reshapedFrame = reshapedFrame.reshape((1, 256, 256, 3))
             pred = model.predict(reshapedFrame)[0][0]
             if pred >= 0.7:
-                outcomes["real"] += 1
+                model_results["total real"] += 1
             else:
-                outcomes["fake"] += 1
-
-            model_results["Predictions"][index]["Outcome"] = (
-                "real" if pred >= 0.7 else "fake"
-            )
-            model_results["Predictions"][index]["Confidence"] = int(pred * 100)
-
-    model_results["Total Outcome"] = outcomes
-    model_results["Confidence"] = {
-        "Fake": True if outcomes["fake"] == max(outcomes.values()) else False,
-        "Real": True if outcomes["real"] == max(outcomes.values()) else False,
-    }
+                model_results["total df"] += 1
+    model_results["outcome"] = "deepfake" if model_results["total df"] >= model_results["total real"] else "real"
     return model_results
 
 
@@ -339,15 +329,12 @@ def FrameExtract(vidObj: cv2.VideoCapture):
 
 def ProcessVideo(video: cv2.VideoCapture, sequence_length: int = 30, transform=None):
     frames = []
-    # first_frame = np.random.randint(0, int(100/sequence_length))
     extracted_frames = FrameExtract(video)
     for index, frame in enumerate(extracted_frames):
         faces = face_recognition.face_locations(frame)
         try:
             top, right, bottom, left = faces[0]
-            # startY, endX, endY, startX = faces[0]
             frame = frame[top:bottom, left:right, :]
-            # TODO Should I replace with Caffe Extract
         except:
             pass
         frames.append(transform(frame))
@@ -360,8 +347,6 @@ def ProcessVideo(video: cv2.VideoCapture, sequence_length: int = 30, transform=N
 
 def makePredictions(model: Model, frames):
     _, logits = model(frames.to(device=VD_CONSTANTS["DEVICE"]))
-    # weight_softmax = model.linear1.weight.detach().cpu().numpy()
-    # model.linear1.weight.detach().cpu().numpy()
     logits_sm = SM(logits)
     _, prediction = torch.max(logits_sm, 1)
     confidence = logits_sm[:, int(prediction.item())].item() * 100
@@ -376,15 +361,22 @@ def loadModel(model_path: str):
 
 
 def detectFakeVideo(video: cv2.VideoCapture, model_path: str):
-    model_results = {}
+    model_results = {
+        "person detected": 'False',
+        "number of faces": 0,
+        "total real": 0,
+        "total df": 0,
+        "outcome": "none"
+    }
     model = loadModel(model_path)
     frames = ProcessVideo(video, 30, VID_TRANSFORMER)
-    model_results["Frames with Faces"] = len(frames)
     if len(frames) > 0:
+        model_results["person detected"] = 'True'
+        model_results["number of faces"] = len(frames)
+
         output = makePredictions(model, frames)
-        model_results["Outcome"] = {
-            "real": True if output[0] == 1 else False,
-            "fake": True if output[0] == 0 else False,
-            "confidence": int(output[1]),
-        }
+        if output:
+            model_results["outcome"] = "deepfake" if output[0] == 0 else "real"
+            model_results["total df"] = 1 if output[0] == 0 else 0
+            model_results["total real"] = 0 if output[0] == 0 else 1
     return model_results
