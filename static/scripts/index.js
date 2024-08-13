@@ -11,6 +11,10 @@ const fileHandler = (file, name, type) => {
     error.innerText = "Please upload an image or video file";
     return false;
   }
+  if (file.size >= 20 * 1000 * 1000) {
+    error.innerText = "Pleas upload a file of size less than 20MB";
+    return false;
+  }
   error.innerText = "";
   let reader = new FileReader();
   reader.readAsDataURL(file);
@@ -35,6 +39,7 @@ const fileHandler = (file, name, type) => {
       loader.classList.add("loader");
       container.appendChild(loader);
       imageDisplay.style.display = "none";
+      error.innerHTML = "It will take some time ...";
     });
     sumbitButton.classList.add(
       "block",

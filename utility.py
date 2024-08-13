@@ -47,6 +47,15 @@ def video_from_byte(loc_dir: str, filename: str):
         return "ERROR"
 
 
+def remove_temp_file(loc_dir: str):
+    for file_name in os.listdir(loc_dir):
+        # construct full file path
+        file_path = loc_dir + file_name
+        if os.path.isfile(file_path):
+            print('Deleting file:', file_path)
+            os.remove(file_path)
+
+
 def img_from_byte(loc_dir: str, filename: str):
     name, _ = os.path.splitext(filename)
     file_path = loc_dir + name + ".bin"
@@ -60,8 +69,8 @@ def img_from_byte(loc_dir: str, filename: str):
         return "ERROR"
 
 
-def generate_name():
-    return "".join(secrets.choice(ascii_lowercase + digits) for _ in range(9))
+# def generate_name():
+#     return "".join(secrets.choice(ascii_lowercase + digits) for _ in range(9))
 
 
 def validate_all_paths(path_dict: dict):
@@ -71,15 +80,6 @@ def validate_all_paths(path_dict: dict):
         else:
             raise FileExistsError(f"{key} Not Exist")
     return True
-
-
-def validate_image(stream):
-    header = stream.read(512)
-    stream.seek(0)
-    is_img = imghdr.what(None, header)
-    if not is_img:
-        return None
-    return "." + (is_img if is_img != "jpeg" else "jpg")
 
 
 def validate_path(path: str):
@@ -330,7 +330,7 @@ def FrameExtract(vidObj: cv2.VideoCapture):
 def ProcessVideo(video: cv2.VideoCapture, sequence_length: int = 30, transform=None):
     frames = []
     extracted_frames = FrameExtract(video)
-    for index, frame in enumerate(extracted_frames):
+    for _, frame in enumerate(extracted_frames):
         faces = face_recognition.face_locations(frame)
         try:
             top, right, bottom, left = faces[0]
@@ -370,6 +370,7 @@ def detectFakeVideo(video: cv2.VideoCapture, model_path: str):
     }
     model = loadModel(model_path)
     frames = ProcessVideo(video, 30, VID_TRANSFORMER)
+    video.release()
     if len(frames) > 0:
         model_results["person detected"] = 'True'
         model_results["number of faces"] = len(frames)

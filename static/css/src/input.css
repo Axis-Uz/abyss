@@ -8,6 +8,9 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: white;
+  background: linear-gradient(rgb(28, 28, 28), rgb(24, 24, 27));
+  background-attachment: fixed;
 }
 
 a {
@@ -17,19 +20,6 @@ a {
 
 * {
   box-sizing: border-box;
-  /* border: dotted 0.1px white; */
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: linear-gradient(rgb(28, 28, 28), rgb(24, 24, 27));
-    background-attachment: fixed;
-    /* background: black; */
-  }
 }
 
 /* Grow */
@@ -56,14 +46,13 @@ a {
 }
 
 #image-display img {
-  object-fit: contain;
-  border: none;
-  border-radius: 5px;
+  width: 100%;
+  height: auto;
 }
 
 #image-display video {
   width: 100%;
-  min-height: 300px;
+  height: 250px;
 }
 
 #image-display figcaption {
@@ -95,4 +84,3 @@ a {
     transform: rotate(360deg);
   }
 }
-
